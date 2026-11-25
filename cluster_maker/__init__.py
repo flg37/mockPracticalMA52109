@@ -31,6 +31,7 @@ from .algorithms import (
     assign_clusters,
     update_centroids,
 )
+from .agglomerative import agglomerative_clustering, compute_cluster_means
 
 # --- Evaluation ---
 from .evaluation import (
@@ -40,7 +41,7 @@ from .evaluation import (
 )
 
 # --- Plotting ---
-from .plotting_clustered import plot_clusters_2d, plot_elbow
+from .plotting_clustered import plot_clusters_2d, plot_elbow, plot_silhouette_scores
 
 # --- High-level interface ---
 from .interface import run_clustering
@@ -69,6 +70,8 @@ __all__ = [
     "init_centroids",
     "assign_clusters",
     "update_centroids",
+    "agglomerative_clustering",
+    "compute_cluster_means",
 
     # Evaluation
     "compute_inertia",
@@ -78,6 +81,7 @@ __all__ = [
     # Plotting
     "plot_clusters_2d",
     "plot_elbow",
+    "plot_silhouette_scores",
 
     # High-level orchestration
     "run_clustering",
