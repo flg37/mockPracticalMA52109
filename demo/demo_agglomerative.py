@@ -32,7 +32,6 @@ from cluster_maker import (
     agglomerative_clustering,
     silhouette_score_sklearn,
     plot_clusters_2d,
-    plot_silhouette_scores,
     export_to_csv,
 )
 
@@ -130,6 +129,24 @@ def plot_linkage_comparison(
     plt.close(fig)
 
 
+def plot_silhouettes(silhouettes: Dict[int, float], best_k: int, save_path: str) -> None:
+    """
+    Save a bar chart of silhouette score against k, highlighting best_k.
+    """
+    k_values = list(silhouettes.keys())
+    colours = ["tab:orange" if k == best_k else "tab:blue" for k in k_values]
+
+    fig, ax = plt.subplots()
+    ax.bar(k_values, list(silhouettes.values()), color=colours)
+    ax.set_xticks(k_values)
+    ax.set_xlabel("Number of clusters (k)")
+    ax.set_ylabel("Silhouette score")
+    ax.set_title(f"Agglomerative on distance from centre (best: k = {best_k})")
+    fig.tight_layout()
+    fig.savefig(save_path, dpi=150)
+    plt.close(fig)
+
+
 def plot_radius_by_cluster(r: np.ndarray, labels: np.ndarray, save_path: str) -> None:
     """
     Save a histogram of distance from centre, with one colour per cluster.
@@ -209,14 +226,7 @@ def main() -> None:
     for k in K_VALUES:
         marker = "  <- best" if k == best_k else ""
         print(f"{k:3d} {silhouettes[k]:12.3f}{marker}")
-    fig_sil, _ = plot_silhouette_scores(
-        K_VALUES,
-        [silhouettes[k] for k in K_VALUES],
-        best_k=best_k,
-        title=f"Agglomerative on distance from centre (best: k = {best_k})",
-    )
-    fig_sil.savefig(os.path.join(OUTPUT_DIR, "4_silhouette_scores.png"), dpi=150)
-    plt.close(fig_sil)
+    plot_silhouettes(silhouettes, best_k, os.path.join(OUTPUT_DIR, "4_silhouette_scores.png"))
 
     # Step 4: final clustering with the chosen k
     labels, _ = agglomerative_clustering(r, best_k, linkage="ward")
