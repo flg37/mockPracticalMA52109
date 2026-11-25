@@ -59,6 +59,7 @@ def main(args: List[str]) -> None:
             input_path=input_path,
             feature_cols=feature_cols,
             algorithm="kmeans",
+            # Changed so k is not maxed at 3 and can run at any number that is put in the for loop
             k = k,
             standardise=True,
             output_path=os.path.join(OUTPUT_DIR, f"{base}_clustered_k{k}.csv"),
@@ -86,6 +87,7 @@ def main(args: List[str]) -> None:
     metrics_df.to_csv(metrics_csv, index=False)
 
     # Plot some statistics (no elbow: avoid inertia vs k)
+    # "silhouette" must match the key returned in run_clustering()["metrics"]
     if "silhouette" in metrics_df.columns:
         plt.figure()
         plt.bar(metrics_df["k"], metrics_df["silhouette"])
