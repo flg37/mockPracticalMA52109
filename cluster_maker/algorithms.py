@@ -23,7 +23,7 @@ def init_centroids(
     if k <= 0:
         raise ValueError("k must be a positive integer.")
     n_samples = X.shape[0]
-    # Changed so k compares to n_samples not X.shape[1]
+    # New Code: k compares to n_samples not X.shape[1]
     if k > n_samples:
         raise ValueError("k cannot be larger than the number of samples.")
 

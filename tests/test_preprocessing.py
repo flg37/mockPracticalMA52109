@@ -15,7 +15,7 @@ from cluster_maker.preprocessing import select_features, standardise_features
 class TestPreprocessing(unittest.TestCase):
 
 
-    # The Bug it tests for: If the standardisation is done incorrectly
+    # The bug it tests for: If the standardisation is done incorrectly
     # which could mean no scaling was done or scaling was done on the wrong axis
     def test_standardise_features_gives_zero_mean_unit_std_per_column(self):
         X = np.array([
@@ -33,7 +33,7 @@ class TestPreprocessing(unittest.TestCase):
         np.testing.assert_allclose(X_scaled.std(axis=0), [1.0, 1.0], atol=1e-12)
 
 
-    # The Bug it tests for: non-numeric columns slipping 
+    # The bug it tests for: non-numeric columns slipping 
     # through input validation unnoticed.
     def test_select_features_rejects_non_numeric_column(self):
         data = pd.DataFrame({
@@ -46,7 +46,7 @@ class TestPreprocessing(unittest.TestCase):
 
         self.assertIn("colour", str(context.exception))
 
-    # The Bug it tests for: If the columns come back in a different order 
+    # The bug it tests for: If the columns come back in a different order 
     # from the order requested 
     def test_select_features_keeps_requested_column_order(self):
         data = pd.DataFrame({
