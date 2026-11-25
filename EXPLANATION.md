@@ -30,4 +30,17 @@ This part runs this for loop where k = 2,3,4,5. For each k value the function `r
 ### Outputs
 The file will create 4 types of outputs but 10 files in total. There's one CSV and one PNG per k (8 files), plus the metrics CSV and the silhouette chart. These are created into the subdirectory called demo_output. The first output is demo_data_clustered_k{k}.csv which contains the original data plus a cluster label column. The second output is demo_data_k{k}.png which contains a 2D scatter of the clusters with centroids. The third output is demo_data_metrics.csv which contains the inertia and silhouette for every k. Finally the last output contains demo_data_silhouette.png which is a picture of the bar chart of silhouette score vs k.
 
+## Part 3 - Overview of the cluster_maker package
+The package cluster_maker is used to generate synthetic clustered data, preprocessing it, running k-means clustering, evaluating the results and plotting them.
 
+| Module | Key Functions | Purpose |
+|---|---|---|
+|`dataframe_builder.py`|`define_dataframe_structure`, `simulate_data`|Defines cluster centres and then generates Gaussian noisy points around them with a true_cluster column|
+|`data_analyser.py`|`calculate_descriptive_statistics`, `calculate_correlation`|Creates summary statistics and a correlation matrix for a DataFrame|
+|`data_exporter.py`|`export_to_csv`, `export_formatted`|Save DataFrames as CSV or as a formatted text table|
+|`preprocessing.py`|`select_features`, `standardise_features`|Picks feature columns with an error if any are missing or non-numeric and then scales them to mean 0, variance 1|
+|`algorithms.py`|`init_centroids`, `assign_clusters`, `update_centroids`, `kmeans`, `sklearn_kmeans`|a Manual k-means is built from three steps, plus a wrapper around scikit-learn's KMeans|
+|`evaluation.py`|`compute_inertia`, `silhouette_score_sklearn`, `elbow_curve`|Measures clustering quality and computes inertia across several values of k|
+|`plotting_clustered.py`|`plot_clusters_2d`, `plot_elbow`|Plots a 2D scatter graph of clusters with centroids, and the elbow plot|
+|`interface.py`|`run_clustering`|A high-level function that chains the full pipeline: load CSV → select and standardise → cluster → metrics → plots → optional export|
+|`__init__.py`|	(none)|Exposes all the public functions, so users can write from cluster_maker import run_clustering|
