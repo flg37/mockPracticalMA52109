@@ -41,7 +41,7 @@ from .evaluation import (
 )
 
 # --- Plotting ---
-from .plotting_clustered import plot_clusters_2d, plot_elbow, plot_silhouette_scores
+from .plotting_clustered import plot_clusters_2d, plot_elbow
 
 # --- High-level interface ---
 from .interface import run_clustering
@@ -81,7 +81,6 @@ __all__ = [
     # Plotting
     "plot_clusters_2d",
     "plot_elbow",
-    "plot_silhouette_scores",
 
     # High-level orchestration
     "run_clustering",
